@@ -14,7 +14,7 @@ Model name is converted to lowercase for the collection name:
 from pydantic import BaseModel, Field
 from typing import Optional
 
-# Example schemas (replace with your own):
+# Example schemas (you can keep or extend these)
 
 class User(BaseModel):
     """
@@ -27,6 +27,17 @@ class User(BaseModel):
     age: Optional[int] = Field(None, ge=0, le=120, description="Age in years")
     is_active: bool = Field(True, description="Whether user is active")
 
+class Store(BaseModel):
+    """
+    UMKM stores collection schema
+    Collection name: "store"
+    """
+    name: str = Field(..., description="Store name")
+    owner: Optional[str] = Field(None, description="Owner name")
+    city: Optional[str] = Field(None, description="City / Location")
+    logo_url: Optional[str] = Field(None, description="Logo image URL")
+    description: Optional[str] = Field(None, description="Short store description")
+
 class Product(BaseModel):
     """
     Products collection schema
@@ -34,11 +45,13 @@ class Product(BaseModel):
     """
     title: str = Field(..., description="Product title")
     description: Optional[str] = Field(None, description="Product description")
-    price: float = Field(..., ge=0, description="Price in dollars")
-    category: str = Field(..., description="Product category")
+    price: float = Field(..., ge=0, description="Price in local currency")
+    category: Optional[str] = Field(None, description="Product category")
     in_stock: bool = Field(True, description="Whether product is in stock")
+    image_url: Optional[str] = Field(None, description="Image URL")
+    store_id: str = Field(..., description="Referenced store ID as string")
 
-# Add your own schemas here:
+# Add your own schemas here if needed
 # --------------------------------------------------
 
 # Note: The Flames database viewer will automatically:
